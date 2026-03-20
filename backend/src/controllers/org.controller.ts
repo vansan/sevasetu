@@ -129,14 +129,15 @@ export const updateOrganization = async (req: AuthRequest, res: Response): Promi
     }
 
     const data = orgSchema.partial().parse(req.body);
+    const updateData: Record<string, any> = { ...data };
 
     const files = req.files as { logo?: Express.Multer.File[]; images?: Express.Multer.File[] };
-    if (files?.logo?.[0]) data.logo = files.logo[0].path as unknown as never;
+    if (files?.logo?.[0]) updateData.logo = files.logo[0].path;
     if (files?.images?.length) {
-      (data as Record<string, unknown>).images = files.images.map((f) => f.path);
+      updateData.images = files.images.map((f) => f.path);
     }
 
-    const updated = await Organization.findByIdAndUpdate(req.params.id, data, { new: true });
+    const updated = await Organization.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json({ message: 'Organization updated.', organization: updated });
   } catch (err) {
     if (err instanceof z.ZodError) {
