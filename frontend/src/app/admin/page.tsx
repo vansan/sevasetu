@@ -150,7 +150,11 @@ export default function AdminPage() {
                       <div>
                         <div className="font-medium text-gray-900 flex items-center">
                           {org.name} 
-                          {org.isVerified && <ShieldCheck className="w-4 h-4 ml-1 text-green-500" title="Verified"/>}
+                          {org.isVerified && (
+                            <span title="Verified" className="inline-flex items-center">
+                              <ShieldCheck className="w-4 h-4 ml-1 text-green-500" />
+                            </span>
+                          )}
                         </div>
                         <div className="text-gray-500 text-xs">ID: {org._id}</div>
                       </div>
