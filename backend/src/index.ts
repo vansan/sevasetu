@@ -20,6 +20,7 @@ connectDB();
 
 // Security middleware
 app.use(helmet());
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   credentials: true,
